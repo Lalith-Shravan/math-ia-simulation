@@ -19,7 +19,14 @@ earth_mass = 5.972 * pow(10, 24)
 orbital_object_1 = OrbitalObject(earth_mass, 7000000, 0, 0)
 orbital_object_2 = OrbitalObject(earth_mass, 7000000, pi / 2, 0)
 
-object_1_plot = ax.scatter(orbital_object_1.point.x, orbital_object_1.point.y, orbital_object_1.point.z, label="Object 1", color="blue")
-object_2_plot = ax.scatter(orbital_object_2.point.x, orbital_object_2.point.y, orbital_object_2.point.z, label="Object 2", color="green")
+for simulation_time in range(0, 6000, 10):
+    orbital_object_1.move(simulation_time)
+    orbital_object_2.move(simulation_time)
 
-plt.show()
+    object_1_plot = ax.scatter(orbital_object_1.point.x, orbital_object_1.point.y, orbital_object_1.point.z, label="Object 1", color="blue")
+    object_2_plot = ax.scatter(orbital_object_2.point.x, orbital_object_2.point.y, orbital_object_2.point.z, label="Object 2", color="green")
+
+    plt.pause(0.01)
+
+    object_1_plot.remove()
+    object_2_plot.remove()
