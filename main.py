@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 from orbitalobject import OrbitalObject
 import numpy as np
-from math import pi
 
 fig = plt.figure(figsize=(10,10))
 ax = fig.add_subplot(111, projection='3d')
@@ -16,8 +15,15 @@ sphere_z = sphere_radius * np.cos(v)
 ax.plot_wireframe(sphere_x, sphere_y, sphere_z, color="gray")
 
 earth_mass = 5.972 * pow(10, 24)
-orbital_object_1 = OrbitalObject(earth_mass, 7000000, 0, 0)
-orbital_object_2 = OrbitalObject(earth_mass, 7000000, pi / 2, 0)
+
+inclination_1 = np.deg2rad(float(input("Inclination Degrees: ")))
+inclination_2 = np.deg2rad(float(input("Inclination Degrees: ")))
+
+longitude_1 = np.deg2rad(float(input("Longitude Degrees: ")))
+longitude_2 = np.deg2rad(float(input("Longitude Degrees: ")))
+
+orbital_object_1 = OrbitalObject(earth_mass, 7000000, inclination_1, longitude_1)
+orbital_object_2 = OrbitalObject(earth_mass, 7000000, inclination_2, longitude_2)
 
 orbit_path_1 = [[], [], []] # x-values, y-values, z-values
 orbit_path_2 = [[], [], []] # x-values, y-values, z-values
@@ -53,7 +59,7 @@ for simulation_time in range(0, 6000, time_interval):
     current_distance = orbital_object_1.point.distanceTo(orbital_object_2.point)
     relative_speed = (current_distance - previous_distance) / time_interval
 
-    if simulation_time % 500 == 0:
+    if simulation_time % 200 == 0:
         print(f"Time {round(simulation_time)} - Speed {round(relative_speed)}")
 
     plt.pause(0.001)
