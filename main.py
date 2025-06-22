@@ -22,7 +22,11 @@ orbital_object_2 = OrbitalObject(earth_mass, 7000000, pi / 2, 0)
 orbit_path_1 = [[], [], []] # x-values, y-values, z-values
 orbit_path_2 = [[], [], []] # x-values, y-values, z-values
 
-for simulation_time in range(0, 6000, 100):
+previous_distance = orbital_object_1.point.distanceTo(orbital_object_2.point)
+
+time_interval = 10
+
+for simulation_time in range(0, 6000, time_interval):
     orbital_object_1.move(simulation_time)
     orbital_object_2.move(simulation_time)
 
@@ -46,7 +50,13 @@ for simulation_time in range(0, 6000, 100):
     orbit_path_1_plot = ax.plot(orbit_path_1[0], orbit_path_1[1], orbit_path_1[2], color="blue")
     orbit_path_2_plot = ax.plot(orbit_path_2[0], orbit_path_2[1], orbit_path_2[2], color="green")
 
-    plt.pause(0.01)
+    current_distance = orbital_object_1.point.distanceTo(orbital_object_2.point)
+    relative_speed = (current_distance - previous_distance) / time_interval
+
+    if simulation_time % 500 == 0:
+        print(f"Time {round(simulation_time)} - Speed {round(relative_speed)}")
+
+    plt.pause(0.001)
 
     object_1_plot.remove()
     object_2_plot.remove()
@@ -58,3 +68,5 @@ for simulation_time in range(0, 6000, 100):
     
     for line in orbit_path_2_plot:
         line.remove()
+
+    previous_distance = current_distance
